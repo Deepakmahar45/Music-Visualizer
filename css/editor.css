@@ -1,0 +1,290 @@
+/* =========================================================
+   MUSIC VISUALIZER - EDITOR CONTROLS
+========================================================= */
+
+/* =========================================================
+   FORM CONTROL GROUPS
+========================================================= */
+.panel-body > * + * {
+    margin-top: 8px;
+}
+
+/* =========================================================
+   RANGE CONTROLS
+========================================================= */
+.panel-body input[type="range"] {
+    display: block;
+    margin-top: 6px;
+    transition: opacity 0.2s ease;
+}
+
+.panel-body input[type="range"]:hover {
+    opacity: 0.85;
+}
+
+/* =========================================================
+   CUSTOM SELECT DROPDOWN (Dark Mode Friendly)
+========================================================= */
+.select-input {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    padding-right: 32px;
+}
+
+/* =========================================================
+   FILE UPLOAD STATES
+========================================================= */
+.upload-area.dragging {
+    border-color: #ffffff;
+    background: #181818;
+    transform: scale(1.01);
+}
+
+.upload-area.loaded {
+    border-style: solid;
+    border-color: #383838;
+    background: #141414;
+}
+
+/* =========================================================
+   AUDIO INFORMATION
+========================================================= */
+.audio-info {
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.audio-info.loaded {
+    border-color: #383838;
+    background: #141414;
+}
+
+.audio-title {
+    font-weight: 500;
+}
+
+/* =========================================================
+   EDITOR OPTION BUTTONS
+========================================================= */
+.option-btn.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    font-weight: 600;
+}
+
+.option-btn.active:hover {
+    background: #e0e0e0;
+}
+
+/* =========================
+   VISUALIZER STYLE BUTTONS
+========================= */
+.visualizer-style-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.visualizer-style-btn {
+    min-height: 34px;
+    border: 1px solid #2c2c2c;
+    border-radius: 7px;
+    background: #0c0c0c;
+    color: #999;
+    cursor: pointer;
+    font-size: 11px;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.visualizer-style-btn:hover {
+    background: #191919;
+    color: #fff;
+    border-color: #555;
+}
+
+.visualizer-style-btn.active {
+    background: #ffffff;
+    color: #000;
+    border-color: #ffffff;
+    font-weight: 600;
+}
+
+/* =========================================================
+   SMOOTH TOGGLE SWITCH (Cross-browser GPU-accelerated)
+========================================================= */
+.toggle-row {
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #252525;
+    border: 1px solid #3a3a3a;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.toggle-row input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #777;
+    transform: translateX(0);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+}
+
+.toggle-row input[type="checkbox"]:checked {
+    background: #ffffff;
+    border-color: #ffffff;
+}
+
+.toggle-row input[type="checkbox"]:checked::after {
+    transform: translateX(16px);
+    background: #000000;
+}
+
+/* =========================================================
+   COLOR PICKER (Chrome, Safari & Firefox Support)
+========================================================= */
+.color-input {
+    appearance: none;
+    -webkit-appearance: none;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+.color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+.color-input::-moz-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+/* =========================================================
+   LYRICS EDITOR & SYNC
+========================================================= */
+.textarea-input {
+    line-height: 1.5;
+    scrollbar-width: thin;
+}
+
+.textarea-input::placeholder {
+    color: #555;
+}
+
+#syncLyricsBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+#syncLyricsBtn.syncing {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* =========================================================
+   PRESET BUTTONS
+========================================================= */
+.preset-btn.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    font-weight: 600;
+}
+
+.preset-btn.active:hover {
+    background: #e0e0e0;
+    color: #000000;
+}
+
+/* =========================================================
+   ASPECT RATIO CONTAINERS
+========================================================= */
+.visualizer-container.aspect-16-9,
+.visualizer-container.ratio-16-9 {
+    aspect-ratio: 16 / 9;
+    max-width: 860px;
+}
+
+.visualizer-container.aspect-9-16,
+.visualizer-container.ratio-9-16 {
+    aspect-ratio: 9 / 16;
+    max-width: 380px;
+}
+
+.visualizer-container.aspect-1-1,
+.visualizer-container.ratio-1-1 {
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+}
+
+/* =========================================================
+   EXPORT STATE
+========================================================= */
+.exporting .visualizer-container {
+    pointer-events: none;
+}
+
+.exporting #exportBtn {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+/* =========================================================
+   ACCESSIBLE TOOLTIPS
+========================================================= */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    padding: 5px 8px;
+    background: #1f1f1f;
+    color: #e5e5e5;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
