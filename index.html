@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A customizable music and audio visualizer for creating dynamic cinematic visual experiences.">
+    <meta name="theme-color" content="#050505">
+
+    <title>Music Visualizer</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- TOP HEADER -->
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">♪</div>
+                <div class="brand-info">
+                    <h1>Music Visualizer</h1>
+                    <span>Audio → Visual Experience</span>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <button id="newProjectBtn" class="btn secondary-btn" type="button">New Project</button>
+                <button id="exportBtn" class="btn primary-btn" type="button">Export</button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace">
+
+            <!-- LEFT SIDEBAR -->
+            <aside class="sidebar left-sidebar" aria-label="Project and Audio Controls">
+
+                <!-- PROJECT -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Project</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label for="projectName" class="input-label">Project Name</label>
+                        <input type="text" id="projectName" class="text-input" placeholder="My Music Video">
+                    </div>
+                </section>
+
+                <!-- AUDIO -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Audio</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label for="audioFile" class="upload-area" id="audioUploadArea">
+                            <div class="upload-icon" aria-hidden="true">🎵</div>
+                            <strong>Upload Audio</strong>
+                            <span>MP3, WAV, OGG</span>
+                        </label>
+                        <input type="file" id="audioFile" accept="audio/*" class="sr-only" style="display: none;">
+
+                        <div class="audio-info" id="audioInfo" aria-live="polite">
+                            <div class="audio-title">No audio selected</div>
+                            <div class="audio-duration">00:00</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BACKGROUND -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Background</h2>
+                    </div>
+                    <div class="panel-body">
+                        <button id="backgroundImageBtn" class="option-btn" type="button">🖼 Image</button>
+                        <button id="backgroundVideoBtn" class="option-btn" type="button">🎬 Video</button>
+                        <button id="backgroundGradientBtn" class="option-btn" type="button">🌈 Gradient</button>
+                        <input type="file" id="backgroundFile" accept="image/*,video/*" class="sr-only" style="display: none;">
+                    </div>
+                </section>
+
+                <!-- VISUALIZER -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Visualizer</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label for="visualizerType" class="input-label">Style</label>
+                        <select id="visualizerType" class="select-input">
+                            <option value="waveform">Waveform</option>
+                            <option value="bars">Frequency Bars</option>
+                            <option value="circle">Circular</option>
+                            <option value="mirror">Mirror Wave</option>
+                        </select>
+
+                        <label for="waveformSize" class="input-label">Waveform Size</label>
+                        <input type="range" id="waveformSize" min="0" max="100" value="50">
+
+                        <label for="waveformOpacity" class="input-label">Opacity</label>
+                        <input type="range" id="waveformOpacity" min="0" max="100" value="100">
+                    </div>
+                </section>
+
+                <!-- EFFECTS -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Effects</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label class="toggle-row">
+                            <span>Glow</span>
+                            <input type="checkbox" id="glowEffect" checked>
+                        </label>
+                        <label class="toggle-row">
+                            <span>Beat Reaction</span>
+                            <input type="checkbox" id="beatEffect" checked>
+                        </label>
+                        <label class="toggle-row">
+                            <span>Particles</span>
+                            <input type="checkbox" id="particleEffect">
+                        </label>
+                        <label class="toggle-row">
+                            <span>Camera Motion</span>
+                            <input type="checkbox" id="cameraEffect">
+                        </label>
+                    </div>
+                </section>
+
+            </aside>
+
+            <!-- CENTER PREVIEW -->
+            <section class="preview-area" aria-label="Visualizer Preview Area">
+
+                <div class="preview-header">
+                    <div>
+                        <h2>Preview</h2>
+                        <span id="previewStatus" aria-live="polite">Ready</span>
+                    </div>
+
+                    <div class="aspect-controls" role="group" aria-label="Aspect Ratio">
+                        <button class="aspect-btn active" data-aspect="16:9" type="button">16:9</button>
+                        <button class="aspect-btn" data-aspect="9:16" type="button">9:16</button>
+                        <button class="aspect-btn" data-aspect="1:1" type="button">1:1</button>
+                    </div>
+                </div>
+
+                <!-- VISUALIZER CANVAS -->
+                <div class="visualizer-container" id="visualizerContainer">
+                    <div id="backgroundLayer" class="background-layer"></div>
+
+                    <canvas id="visualizerCanvas">
+                        Your browser does not support HTML5 Canvas.
+                    </canvas>
+
+                    <div id="visualizerOverlay" class="visualizer-overlay">
+                        <div id="songTitle" class="song-title">Your Song</div>
+                        <div id="songArtist" class="song-artist">Artist Name</div>
+                    </div>
+
+                    <div id="loadingOverlay" class="loading-overlay hidden" aria-live="assertive">
+                        <div class="loader" aria-hidden="true"></div>
+                        <span>Processing...</span>
+                    </div>
+
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-icon" aria-hidden="true">♪</div>
+                        <h3>Upload a song</h3>
+                        <p>Your dynamic visualizer will appear here.</p>
+                    </div>
+                </div>
+
+                <!-- AUDIO PLAYER -->
+                <div class="player" role="region" aria-label="Audio Controls">
+                    <button id="playBtn" class="play-btn" type="button" aria-label="Play or pause audio">▶</button>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" role="progressbar" aria-label="Playback track progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+
+                        <div class="time-display" aria-live="off">
+                            <span id="currentTime">00:00</span>
+                            <span id="totalTime">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="volume-control">
+                        <span aria-hidden="true">🔊</span>
+                        <input type="range" id="volume" min="0" max="100" value="100" aria-label="Volume level">
+                    </div>
+
+                    <audio id="audioPlayer" preload="metadata" playsinline></audio>
+                </div>
+
+            </section>
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="sidebar right-sidebar" aria-label="Visual Appearance and Lyrics">
+
+                <!-- TEXT -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Text</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label for="titleInput" class="input-label">Title</label>
+                        <input type="text" id="titleInput" class="text-input" placeholder="Song Title">
+
+                        <label for="artistInput" class="input-label">Artist</label>
+                        <input type="text" id="artistInput" class="text-input" placeholder="Artist Name">
+
+                        <label for="fontSize" class="input-label">Font Size</label>
+                        <input type="range" id="fontSize" min="10" max="100" value="32">
+                    </div>
+                </section>
+
+                <!-- LYRICS -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Lyrics</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label class="toggle-row">
+                            <span>Show Lyrics</span>
+                            <input type="checkbox" id="showLyrics">
+                        </label>
+
+                        <label for="lyricsInput" class="input-label">Lyrics Text</label>
+                        <textarea id="lyricsInput" class="textarea-input" placeholder="Paste your lyrics here..."></textarea>
+
+                        <button id="syncLyricsBtn" class="btn secondary-btn full-btn" type="button">Sync Lyrics</button>
+                    </div>
+                </section>
+
+                <!-- COLOR -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Appearance</h2>
+                    </div>
+                    <div class="panel-body">
+                        <label for="waveformColor" class="input-label">Waveform Color</label>
+                        <input type="color" id="waveformColor" value="#ffffff" class="color-input">
+
+                        <label for="backgroundOverlay" class="input-label">Background Overlay</label>
+                        <input type="range" id="backgroundOverlay" min="0" max="100" value="40">
+                    </div>
+                </section>
+
+                <!-- PRESETS -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Presets</h2>
+                    </div>
+                    <div class="panel-body preset-grid">
+                        <button class="preset-btn" data-preset="cinematic" type="button">Cinematic</button>
+                        <button class="preset-btn" data-preset="minimal" type="button">Minimal</button>
+                        <button class="preset-btn" data-preset="neon" type="button">Neon</button>
+                        <button class="preset-btn" data-preset="dark" type="button">Dark</button>
+                    </div>
+                </section>
+
+            </aside>
+
+        </main>
+
+        <!-- BOTTOM STATUS BAR -->
+        <footer class="statusbar">
+            <div id="systemStatus" aria-live="polite">Ready</div>
+
+            <div class="status-actions">
+                <span>Audio: <strong id="audioStatus">Not Loaded</strong></span>
+                <span>FPS: <strong id="fpsCounter">0</strong></span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/app.js" defer></script>
+</body>
+
+</html>
