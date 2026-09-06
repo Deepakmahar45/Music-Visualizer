@@ -1,0 +1,248 @@
+/* =========================================================
+   MUSIC VISUALIZER - RESPONSIVE DESIGN
+========================================================= */
+
+/* =========================================================
+   TABLET (1100px and below)
+========================================================= */
+@media (max-width: 1100px) {
+    .workspace {
+        grid-template-columns: 230px minmax(320px, 1fr) 230px;
+    }
+
+    .sidebar {
+        padding: 12px;
+    }
+
+    .visualizer-container,
+    .player {
+        width: calc(100% - 24px);
+    }
+}
+
+/* =========================================================
+   SMALL TABLET & LARGE PHONES (850px and below)
+========================================================= */
+@media (max-width: 850px) {
+    .workspace {
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    /* Keep canvas and player at the top */
+    .preview-area {
+        order: 1;
+        width: 100%;
+        padding-bottom: 8px;
+    }
+
+    /* Sidebars stacked below naturally */
+    .sidebar {
+        overflow-y: visible;
+        height: auto;
+    }
+
+    .left-sidebar {
+        order: 2;
+        width: 100%;
+        border-right: none;
+        border-top: 1px solid #242424;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .left-sidebar .panel {
+        margin-bottom: 0;
+    }
+
+    .right-sidebar {
+        order: 3;
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #242424;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .right-sidebar .panel {
+        margin-bottom: 0;
+    }
+}
+
+/* =========================================================
+   STANDARD MOBILE (650px and below)
+========================================================= */
+@media (max-width: 650px) {
+    /* Header compact */
+    .topbar {
+        height: 56px;
+        padding: 0 14px;
+    }
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .brand-info h1 {
+        font-size: 14px;
+    }
+
+    .brand-info span {
+        display: none;
+    }
+
+    .btn {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+
+    /* Single column stack for sidebars */
+    .left-sidebar,
+    .right-sidebar {
+        display: block;
+        padding: 12px;
+    }
+
+    .left-sidebar .panel,
+    .right-sidebar .panel {
+        margin-bottom: 12px;
+    }
+
+    /* Preview Header */
+    .preview-header {
+        height: 48px;
+        padding: 0 14px;
+    }
+
+    /* Aspect controls touch friendly */
+    .aspect-controls {
+        gap: 4px;
+    }
+
+    .aspect-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        min-height: 30px;
+    }
+
+    /* Visualizer sizing on mobile */
+    .visualizer-container {
+        width: calc(100% - 20px);
+        margin: 8px auto;
+        border-radius: 10px;
+        max-height: 48vh; /* Prevents push-down of player */
+    }
+
+    .visualizer-container.aspect-9-16,
+    .visualizer-container.ratio-9-16 {
+        max-width: 260px;
+    }
+
+    /* Player controls */
+    .player {
+        width: calc(100% - 20px);
+        min-height: 56px;
+        margin: 6px auto 10px;
+        padding: 8px 12px;
+        gap: 10px;
+    }
+
+    .play-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .volume-control {
+        display: none; /* Native mobile hardware volume takes over */
+    }
+
+    /* Presets: 2 columns to prevent text clipping */
+    .preset-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    /* Footer status */
+    .statusbar {
+        height: auto;
+        min-height: 36px;
+        padding: 8px 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES (400px and below)
+========================================================= */
+@media (max-width: 400px) {
+    .topbar {
+        padding: 0 10px;
+    }
+
+    .topbar-actions .secondary-btn {
+        display: none; /* Keep primary 'Export' visible */
+    }
+
+    .visualizer-container,
+    .player {
+        width: calc(100% - 12px);
+    }
+
+    .text-input,
+    .select-input {
+        font-size: 12px;
+    }
+
+    .statusbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .status-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* =========================================================
+   MOBILE LANDSCAPE MODE
+========================================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+    .topbar {
+        height: 46px;
+    }
+
+    .visualizer-container {
+        max-height: 60vh;
+        width: auto;
+        margin: 4px auto;
+    }
+
+    .player {
+        margin: 4px auto 8px;
+        min-height: 48px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY: REDUCED MOTION
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
