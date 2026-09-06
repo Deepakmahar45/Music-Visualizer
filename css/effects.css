@@ -1,0 +1,685 @@
+/* =========================================================
+   MUSIC VISUALIZER - EFFECTS SYSTEM UI STYLING
+   css/effects.css
+========================================================= */
+
+/* =========================================================
+   EFFECTS PANEL & SECTIONS
+========================================================= */
+.effects-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.effects-section {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.effects-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e7e7e7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.effects-section-subtitle {
+  margin-top: -3px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #666;
+}
+
+/* =========================================================
+   EFFECT LIST
+========================================================= */
+.effect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.effect-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 8px 10px;
+  border: 1px solid #252525;
+  border-radius: 9px;
+  background: #101010;
+  color: #aaa;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.effect-item:hover {
+  border-color: #3a3a3a;
+  background: #151515;
+}
+
+.effect-item.active {
+  border-color: #555;
+  background: #181818;
+  color: #fff;
+}
+
+.effect-item:active {
+  transform: scale(0.995);
+}
+
+.effect-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #1b1b1b;
+  color: #888;
+  font-size: 13px;
+}
+
+.effect-item.active .effect-icon {
+  background: #252525;
+  color: #ddd;
+}
+
+.effect-info {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.effect-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.effect-description {
+  overflow: hidden;
+  font-size: 9px;
+  line-height: 1.4;
+  color: #666;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   SMOOTH BALANCED TOGGLE
+========================================================= */
+.effect-toggle {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid #343434;
+  border-radius: 99px;
+  background: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.effect-toggle::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  background: #777;
+  transform: translateX(0);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+}
+
+.effect-toggle:checked {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.effect-toggle:checked::after {
+  transform: translateX(16px);
+  background: #000000;
+}
+
+/* =========================================================
+   EFFECT GRID
+========================================================= */
+.effect-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.effect-card {
+  min-height: 64px;
+  padding: 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  border: 1px solid #252525;
+  border-radius: 8px;
+  background: #101010;
+  color: #888;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.effect-card:hover {
+  border-color: #414141;
+  color: #ccc;
+}
+
+.effect-card.active {
+  border-color: #666;
+  background: #191919;
+  color: #fff;
+}
+
+.effect-card:active {
+  transform: scale(0.98);
+}
+
+.effect-card-icon {
+  font-size: 14px;
+}
+
+.effect-card-name {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   EFFECT CONTROLS & RANGE SLIDERS
+========================================================= */
+.effect-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 3px;
+  padding: 10px;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  background: #0d0d0d;
+}
+
+.effect-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.effect-control-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.effect-control-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #999;
+}
+
+.effect-control-value {
+  font-size: 10px;
+  color: #ccc;
+  font-variant-numeric: tabular-nums;
+}
+
+.effect-control input[type="range"] {
+  width: 100%;
+  height: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 99px;
+  background: #292929;
+  outline: none;
+  cursor: pointer;
+}
+
+.effect-control input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.effect-control input[type="range"]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+/* =========================================================
+   COLOR CONTROL
+========================================================= */
+.effect-color-control {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.effect-color-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.effect-color-label strong {
+  font-size: 10px;
+  color: #aaa;
+}
+
+.effect-color-label span {
+  font-size: 9px;
+  color: #5f5f5f;
+}
+
+.effect-color-input {
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #303030;
+  border-radius: 6px;
+  background: #111;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.effect-color-input::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.effect-color-input::-webkit-color-swatch,
+.effect-color-input::-moz-color-swatch {
+  border: none;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   PARAMETERS & CUSTOM SELECT
+========================================================= */
+.effect-parameter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.effect-parameter {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid #222;
+  border-radius: 7px;
+  background: #111;
+}
+
+.effect-parameter-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 9px;
+  color: #777;
+}
+
+.effect-select {
+  width: 100%;
+  height: 30px;
+  padding: 0 24px 0 8px;
+  border: 1px solid #292929;
+  border-radius: 6px;
+  background: #111;
+  color: #bbb;
+  font-size: 10px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px;
+}
+
+.effect-select:hover {
+  border-color: #444;
+}
+
+.effect-select:focus {
+  border-color: #666;
+}
+
+/* =========================================================
+   STACK & REORDERING
+========================================================= */
+.effects-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.effects-stack-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 5px 8px;
+  border: 1px solid #242424;
+  border-radius: 6px;
+  background: #111;
+}
+
+.effects-stack-item.dragging {
+  opacity: 0.4;
+}
+
+.effects-stack-handle {
+  color: #555;
+  font-size: 12px;
+  cursor: grab;
+  user-select: none;
+}
+
+.effects-stack-handle:active {
+  cursor: grabbing;
+}
+
+.effects-stack-name {
+  flex: 1;
+  font-size: 10px;
+  color: #aaa;
+}
+
+.effects-stack-remove {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.effects-stack-remove:hover {
+  background: #202020;
+  color: #ddd;
+}
+
+.add-effect-button {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed #353535;
+  border-radius: 7px;
+  background: #101010;
+  color: #888;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.add-effect-button:hover {
+  border-color: #555;
+  background: #151515;
+  color: #ddd;
+}
+
+/* =========================================================
+   EFFECT PREVIEW & METERS
+========================================================= */
+.effect-preview {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid #252525;
+  border-radius: 8px;
+  background: #0b0b0b;
+}
+
+.effect-preview-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  height: 2px;
+  transform: translate(-50%, -50%);
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor, 0 0 20px currentColor;
+}
+
+.effect-strength {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.effect-strength-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: #252525;
+  overflow: hidden;
+}
+
+.effect-strength-fill {
+  width: 50%;
+  height: 100%;
+  border-radius: inherit;
+  background: #ffffff;
+  transition: width 0.15s ease;
+}
+
+/* =========================================================
+   GROUPS & BADGES
+========================================================= */
+.effect-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.effect-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #202020;
+}
+
+.effect-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.effect-group-count {
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: 99px;
+  background: #1c1c1c;
+  color: #777;
+  font-size: 8px;
+  text-align: center;
+}
+
+.audio-reactive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 6px;
+  border: 1px solid #292929;
+  border-radius: 99px;
+  background: #111;
+  color: #777;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.audio-reactive-badge::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.audio-reactive-badge.active {
+  color: #fff;
+}
+
+/* =========================
+   BLEND MODES & RESET
+========================= */
+.effect-blend-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.effect-blend-option {
+  min-height: 28px;
+  border: 1px solid #292929;
+  border-radius: 6px;
+  background: #111;
+  color: #777;
+  font-size: 9px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.effect-blend-option:hover {
+  border-color: #444;
+  color: #bbb;
+}
+
+.effect-blend-option.active {
+  border-color: #666;
+  background: #1b1b1b;
+  color: #eee;
+}
+
+.effects-reset {
+  width: 100%;
+  min-height: 30px;
+  border: 1px solid #292929;
+  border-radius: 7px;
+  background: #111;
+  color: #777;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.effects-reset:hover {
+  border-color: #444;
+  background: #181818;
+  color: #ddd;
+}
+
+.effects-performance-warning {
+  display: none;
+  padding: 8px 10px;
+  border: 1px solid #342d20;
+  border-radius: 7px;
+  background: #15120d;
+  color: #9b8b6c;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.effects-performance-warning.show {
+  display: block;
+}
+
+.effect-controls.disabled,
+.effects-settings.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+.effect-item:focus-within,
+.effect-card:focus-within,
+.effect-toggle:focus-visible,
+.effect-select:focus-visible,
+.add-effect-button:focus-visible,
+.effects-reset:focus-visible,
+.effect-blend-option:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+========================================================= */
+@media (max-width: 850px) {
+  .effect-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .effect-grid,
+  .effect-parameter-row,
+  .effect-color-control {
+    grid-template-columns: 1fr;
+  }
+
+  .effect-color-input {
+    width: 100%;
+    height: 32px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .effect-item,
+  .effect-card,
+  .effect-toggle,
+  .effect-toggle::after,
+  .effect-select,
+  .add-effect-button,
+  .effects-reset,
+  .effect-strength-fill {
+    transition: none !important;
+  }
+}
