@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------
     // BACKGROUND HANDLING
     // --------------------------------------------
-    backgroundImageBtn?.addEventListener("click", () => {
+        BackgroundImageBtn?.addEventListener("click", () => {
         backgroundFile.accept = "image/*";
         backgroundFile.click();
     });
@@ -274,19 +274,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     backgroundFile?.addEventListener("change", (event) => {
-        const file = event.target.files[0];
+        const file = event.target.files && event.target.files[0];
         if (!file) return;
 
         if (bgURL) URL.revokeObjectURL(bgURL);
         bgURL = URL.createObjectURL(file);
 
+        // Purana background saaf karein
         backgroundLayer.innerHTML = "";
-        backgroundLayer.style.backgroundImage = "";
+        backgroundLayer.style.backgroundImage = "none";
 
         if (file.type.startsWith("image/")) {
-            backgroundLayer.style.backgroundImage = `url("${bgURL}")`;
-            backgroundLayer.style.backgroundSize = "cover";
-            backgroundLayer.style.backgroundPosition = "center";
+            // CSS background ke bajaye direct <img> tag (taaki mobile scroll par na hile)
+            const img = document.createElement("img");
+            img.src = bgURL;
+            img.alt = "Background";
+            img.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;";
+            backgroundLayer.appendChild(img);
+
             if (systemStatus) systemStatus.textContent = "Background image applied";
         } else if (file.type.startsWith("video/")) {
             const video = document.createElement("video");
@@ -295,12 +300,21 @@ document.addEventListener("DOMContentLoaded", () => {
             video.loop = true;
             video.muted = true;
             video.playsInline = true;
-            video.style.width = "100%";
-            video.style.height = "100%";
-            video.style.objectFit = "cover";
+            video.setAttribute("playsinline", "");
+            video.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;";
             backgroundLayer.appendChild(video);
             video.play().catch(() => {});
+
             if (systemStatus) systemStatus.textContent = "Background video applied";
+        }
+
+        // Upload notice parde ko hatayein
+        const emptyState = document.getElementById("emptyState");
+        if (emptyState) emptyState.classList.add("hidden");
+
+        // Canvas ko naye frame size ke mutabiq redraw karein (lines stretch nahi hongi)
+        if (window.visualizerRenderer && typeof window.visualizerRenderer.resize === "function") {
+            window.visualizerRenderer.resize();
         }
     });
 
@@ -309,6 +323,9 @@ document.addEventListener("DOMContentLoaded", () => {
         backgroundLayer.style.backgroundImage =
             "radial-gradient(circle at center, #242424 0%, #0b0b0b 55%, #000000 100%)";
         if (systemStatus) systemStatus.textContent = "Gradient applied";
+
+        const emptyState = document.getElementById("emptyState");
+        if (emptyState) emptyState.classList.add("hidden");
     });
 
     // --------------------------------------------
