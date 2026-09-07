@@ -9,7 +9,7 @@
 
     <title>Music Visualizer</title>
 
-    <!-- CSS -->
+    <!-- CSS STYLESHEETS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/editor.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -65,7 +65,7 @@
                         <label for="audioFile" class="upload-area" id="audioUploadArea">
                             <div class="upload-icon" aria-hidden="true">🎵</div>
                             <strong>Upload Audio</strong>
-                            <span>MP3, WAV, OGG</span>
+                            <span>MP3, WAV, OGG, FLAC</span>
                         </label>
                         <input type="file" id="audioFile" accept="audio/*" class="sr-only" style="display: none;">
 
@@ -97,14 +97,17 @@
                     <div class="panel-body">
                         <label for="visualizerType" class="input-label">Style</label>
                         <select id="visualizerType" class="select-input">
-                            <option value="waveform">Waveform</option>
-                            <option value="bars">Frequency Bars</option>
-                            <option value="circle">Circular</option>
+                            <option value="waveform">Classic Waveform</option>
+                            <option value="smoothWave">Smooth Wave</option>
+                            <option value="dualWave">Dual Wave</option>
                             <option value="mirror">Mirror Wave</option>
+                            <option value="bars">Frequency Bars</option>
+                            <option value="spectrumCurve">Spectrum Curve</option>
+                            <option value="circle">Circular Spectrum</option>
                         </select>
 
-                        <label for="waveformSize" class="input-label">Waveform Size</label>
-                        <input type="range" id="waveformSize" min="0" max="100" value="50">
+                        <label for="waveformSize" class="input-label">Visualizer Size</label>
+                        <input type="range" id="waveformSize" min="10" max="200" value="100">
 
                         <label for="waveformOpacity" class="input-label">Opacity</label>
                         <input type="range" id="waveformOpacity" min="0" max="100" value="100">
@@ -286,15 +289,36 @@
     </div>
 
 
-    <!-- JAVASCRIPT DEPENDENCY ORDER -->
+    <!-- =========================================================
+         JAVASCRIPT ENGINE DEPENDENCY HIERARCHY
+         ========================================================= -->
+
+    <!-- 1. Core Utilities & Reactive State Store -->
     <script src="js/utils.js" defer></script>
     <script src="js/state.js" defer></script>
+
+    <!-- 2. Audio Processing & Detection Engines -->
     <script src="js/audio/waveform.js" defer></script>
     <script src="js/audio/frequency.js" defer></script>
     <script src="js/audio/beat-detector.js" defer></script>
     <script src="js/audio/audio-loader.js" defer></script>
     <script src="js/audio/audio-analyzer.js" defer></script>
+
+    <!-- 3. Canvas Rendering Core & Visualizer Manager -->
+    <script src="js/visualizer/renderer.js" defer></script>
+    <script src="js/visualizer/visualizer-manager.js" defer></script>
+
+    <!-- 4. Visualizer Style Plugins -->
+    <script src="js/visualizer/smooth-wave.js" defer></script>
+    <script src="js/visualizer/dual-wave.js" defer></script>
+    <script src="js/visualizer/waveform-renderer.js" defer></script>
+    <script src="js/visualizer/mirror-wave.js" defer></script>
+    <script src="js/visualizer/bars.js" defer></script>
+    <script src="js/visualizer/spectrum.js" defer></script>
+    <script src="js/visualizer/circle.js" defer></script>
+
+    <!-- 5. Main Application Controller -->
     <script src="js/app.js" defer></script>
 </body>
-</html>
 
+</html>
