@@ -260,73 +260,89 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --------------------------------------------
-    // BACKGROUND HANDLING
-    // --------------------------------------------
-        BackgroundImageBtn?.addEventListener("click", () => {
-        backgroundFile.accept = "image/*";
-        backgroundFile.click();
-    });
+   /* =========================================================
+   BACKGROUND CONTROLLER (CRASH-PROOF)
+   ========================================================= */
+(() => {
+    const fileInput = document.getElementById("backgroundFile");
+    const imgBtn = document.getElementById("backgroundImageBtn");
+    const vidBtn = document.getElementById("backgroundVideoBtn");
+    const gradBtn = document.getElementById("backgroundGradientBtn");
+    const bgLayer = document.getElementById("backgroundLayer");
+    const emptyState = document.getElementById("emptyState");
+    const systemStatus = document.getElementById("systemStatus");
+    let activeMediaUrl = null;
 
-    backgroundVideoBtn?.addEventListener("click", () => {
-        backgroundFile.accept = "video/*";
-        backgroundFile.click();
-    });
+    // 1. Image button click
+    if (imgBtn && fileInput) {
+        imgBtn.onclick = () => {
+            fileInput.accept = "image/*";
+            fileInput.click();
+        };
+    }
 
-    backgroundFile?.addEventListener("change", (event) => {
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
+    // 2. Video button click
+    if (vidBtn && fileInput) {
+        vidBtn.onclick = () => {
+            fileInput.accept = "video/*";
+            fileInput.click();
+        };
+    }
 
-        if (bgURL) URL.revokeObjectURL(bgURL);
-        bgURL = URL.createObjectURL(file);
+    // 3. File select hone par inject logic
+    if (fileInput && bgLayer) {
+        fileInput.onchange = (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
 
-        // Purana background saaf karein
-        backgroundLayer.innerHTML = "";
-        backgroundLayer.style.backgroundImage = "none";
+            if (activeMediaUrl) {
+                URL.revokeObjectURL(activeMediaUrl);
+            }
+            activeMediaUrl = URL.createObjectURL(file);
 
-        if (file.type.startsWith("image/")) {
-            // CSS background ke bajaye direct <img> tag (taaki mobile scroll par na hile)
-            const img = document.createElement("img");
-            img.src = bgURL;
-            img.alt = "Background";
-            img.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;";
-            backgroundLayer.appendChild(img);
+            bgLayer.innerHTML = "";
+            bgLayer.style.backgroundImage = "none";
 
-            if (systemStatus) systemStatus.textContent = "Background image applied";
-        } else if (file.type.startsWith("video/")) {
-            const video = document.createElement("video");
-            video.src = bgURL;
-            video.autoplay = true;
-            video.loop = true;
-            video.muted = true;
-            video.playsInline = true;
-            video.setAttribute("playsinline", "");
-            video.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;";
-            backgroundLayer.appendChild(video);
-            video.play().catch(() => {});
+            if (file.type.startsWith("video/")) {
+                const video = document.createElement("video");
+                video.src = activeMediaUrl;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
+                video.setAttribute("playsinline", "");
+                video.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;";
+                bgLayer.appendChild(video);
+                video.play().catch(() => {});
+                if (systemStatus) systemStatus.textContent = "Background video applied";
+            } else {
+                const img = document.createElement("img");
+                img.src = activeMediaUrl;
+                img.alt = "Background";
+                img.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;";
+                bgLayer.appendChild(img);
+                if (systemStatus) systemStatus.textContent = "Background image applied";
+            }
 
-            if (systemStatus) systemStatus.textContent = "Background video applied";
-        }
+            if (emptyState) emptyState.classList.add("hidden");
+            fileInput.value = ""; // Taaki same file dobara select karne par bhi chale
+        };
+    }
 
-        // Upload notice parde ko hatayein
-        const emptyState = document.getElementById("emptyState");
-        if (emptyState) emptyState.classList.add("hidden");
-
-        // Canvas ko naye frame size ke mutabiq redraw karein (lines stretch nahi hongi)
-        if (window.visualizerRenderer && typeof window.visualizerRenderer.resize === "function") {
-            window.visualizerRenderer.resize();
-        }
-    });
-
-    backgroundGradientBtn?.addEventListener("click", () => {
-        backgroundLayer.innerHTML = "";
-        backgroundLayer.style.backgroundImage =
-            "radial-gradient(circle at center, #242424 0%, #0b0b0b 55%, #000000 100%)";
-        if (systemStatus) systemStatus.textContent = "Gradient applied";
-
-        const emptyState = document.getElementById("emptyState");
-        if (emptyState) emptyState.classList.add("hidden");
-    });
+    // 4. Gradient button click
+    if (gradBtn && bgLayer) {
+        gradBtn.onclick = () => {
+            if (activeMediaUrl) {
+                URL.revokeObjectURL(activeMediaUrl);
+                activeMediaUrl = null;
+            }
+            bgLayer.innerHTML = "";
+            bgLayer.style.backgroundImage = "radial-gradient(circle at center, #242424 0%, #0b0b0b 55%, #000000 100%)";
+            if (systemStatus) systemStatus.textContent = "Gradient applied";
+            if (emptyState) emptyState.classList.add("hidden");
+        };
+    }
+})();
 
     // --------------------------------------------
     // MAIN RENDER LOOP
